@@ -271,7 +271,7 @@ int SerialKlipperPrinter::get_power_devices_count()
 bool SerialKlipperPrinter::set_power_device_state(const char* device_name, bool state)
 {
     String request = "/machine/device_power/device?device=" + urlEncode(device_name) + "&action=" + (state ? "on" : "off");
-    return make_serial_request_nocontent(HttpGet, request.c_str());
+    return make_serial_request_nocontent(HttpPost, request.c_str());
 }
 
 #ifdef CYD_S3
