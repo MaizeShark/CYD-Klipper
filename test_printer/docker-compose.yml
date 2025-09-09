@@ -4,7 +4,7 @@ services:
     ports:
       - "7125:7125"
       - "8110:8110"
-    image: ghcr.io/mainsail-crew/virtual-klipper-printer:master
+    image: ghcr.io/mainsail-crew/virtual-klipper-printer:latest
   webui:
     container_name: mainsail
     volumes:
