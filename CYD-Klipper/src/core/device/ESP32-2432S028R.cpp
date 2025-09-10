@@ -68,13 +68,11 @@ void set_invert_display(){
 
 void screen_setup()
 {
+    // Initialize hardware
     touchscreen_spi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
     touchscreen.begin(touchscreen_spi);
-    touchscreen.setRotation(global_config.rotate_screen ? 3 : 1);
-
-    lv_init();
-
     tft.init();
+    lv_init();
 
     if (global_config.display_mode) {
         // <3 https://github.com/witnessmenow/ESP32-Cheap-Yellow-Display/blob/main/cyd.md#the-display-doesnt-look-as-good
@@ -85,20 +83,36 @@ void screen_setup()
         tft.writedata(1);
     }
 
+    // Configure backlight and initial screen state
     ledcSetup(0, 5000, 12);
     ledcAttachPin(21, 0);
     tft.fillScreen(TFT_BLACK);
     set_invert_display();
-    touchscreen_spi.begin(XPT2046_CLK, XPT2046_MISO, XPT2046_MOSI, XPT2046_CS);
-    touchscreen.begin(touchscreen_spi);
 
+    // Initialize LVGL buffer
     lv_disp_draw_buf_init(&draw_buf, buf, NULL, CYD_SCREEN_HEIGHT_PX * CYD_SCREEN_WIDTH_PX / 10);
 
     /*Initialize the display*/
     static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
-    disp_drv.hor_res = CYD_SCREEN_WIDTH_PX;
-    disp_drv.ver_res = CYD_SCREEN_HEIGHT_PX;
+
+    // --- START: Added Code ---
+    #ifdef CYD_SCREEN_VERTICAL
+        // Portrait orientation
+        disp_drv.hor_res = CYD_SCREEN_HEIGHT_PX;
+        disp_drv.ver_res = CYD_SCREEN_WIDTH_PX;
+        touchscreen.setRotation(2);
+        tft.setRotation(global_config.rotate_screen ? 2 : 0);
+    #else
+        // Landscape orientation
+        disp_drv.hor_res = CYD_SCREEN_WIDTH_PX;
+        disp_drv.ver_res = CYD_SCREEN_HEIGHT_PX;
+        uint8_t rotation = global_config.rotate_screen ? 3 : 1;
+        tft.setRotation(rotation);
+        touchscreen.setRotation(rotation);
+    #endif
+    // --- END: Added Code ---
+    
     disp_drv.flush_cb = screen_lv_flush;
     disp_drv.draw_buf = &draw_buf;
     lv_disp_drv_register(&disp_drv);
