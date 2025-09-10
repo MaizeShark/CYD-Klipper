@@ -130,9 +130,13 @@ static void double_size_gcode_img_switch(lv_event_t* e){
     write_global_config();
 }
 
-static void rotate_screen_switch(lv_event_t* e){
-    bool checked = lv_obj_has_state(lv_event_get_target(e), LV_STATE_CHECKED);
-    global_config.rotate_screen = checked;
+const char* rotating_options = "0°\n90°\n180°\n270°";
+const unsigned char  rotating_options_values[] = { 0, 1, 2, 3 };
+
+static void rotate_screen_switch(lv_event_t * e){
+    lv_obj_t * dropdown = lv_event_get_target(e);
+    auto selected = lv_dropdown_get_selected(dropdown);
+    global_config.rotate_screen = rotating_options_values[selected];
     global_config.screen_calibrated = false;
     write_global_config();
     ESP.restart();
@@ -249,6 +253,13 @@ void settings_section_device(lv_obj_t* panel)
             break;
         }
     }
+    int rotating_settings_index = 0;
+    for (int i = 0; i < SIZEOF(rotating_options_values); i++){
+        if (rotating_options_values[i] == global_config.rotate_screen){
+            rotating_settings_index = i;
+            break;
+        }
+    }
 
     lv_create_custom_menu_dropdown("Brightness", panel, brightness_dropdown, brightness_options, brightness_settings_index);
 
@@ -270,6 +281,7 @@ void settings_section_device(lv_obj_t* panel)
     // TODO: Rotating screen requires different calibration points. 
 #else
     lv_create_custom_menu_switch("Rotate Screen", panel, rotate_screen_switch, global_config.rotate_screen);
+    lv_create_custom_menu_dropdown("Rotate Screen", panel, rotate_screen_switch, rotating_options, rotating_settings_index);
 #endif
 
     lv_create_custom_menu_switch("Auto Update", panel, auto_ota_update_switch, global_config.auto_ota_update);
