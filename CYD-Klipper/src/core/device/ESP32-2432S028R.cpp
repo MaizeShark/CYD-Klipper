@@ -96,23 +96,24 @@ void screen_setup()
     static lv_disp_drv_t disp_drv;
     lv_disp_drv_init(&disp_drv);
 
-    // --- START: Added Code ---
+    // --- START: Added Orientation Logic ---
     #ifdef CYD_SCREEN_VERTICAL
         // Portrait orientation
-        disp_drv.hor_res = CYD_SCREEN_HEIGHT_PX;
-        disp_drv.ver_res = CYD_SCREEN_WIDTH_PX;
-        touchscreen.setRotation(2);
-        tft.setRotation(global_config.rotate_screen ? 2 : 0);
+        disp_drv.hor_res = CYD_SCREEN_HEIGHT_PX;  // 240
+        disp_drv.ver_res = CYD_SCREEN_WIDTH_PX; // 320
+        uint8_t rotation = global_config.rotate_screen ? 2 : 0;
+        tft.setRotation(rotation);
+        touchscreen.setRotation(rotation);
     #else
         // Landscape orientation
-        disp_drv.hor_res = CYD_SCREEN_WIDTH_PX;
-        disp_drv.ver_res = CYD_SCREEN_HEIGHT_PX;
+        disp_drv.hor_res = CYD_SCREEN_HEIGHT_PX;  // 320
+        disp_drv.ver_res = CYD_SCREEN_WIDTH_PX; // 240
         uint8_t rotation = global_config.rotate_screen ? 3 : 1;
         tft.setRotation(rotation);
         touchscreen.setRotation(rotation);
     #endif
-    // --- END: Added Code ---
-    
+    // --- END: Added Orientation Logic ---
+
     disp_drv.flush_cb = screen_lv_flush;
     disp_drv.draw_buf = &draw_buf;
     lv_disp_drv_register(&disp_drv);
