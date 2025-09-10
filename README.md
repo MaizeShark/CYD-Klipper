@@ -7,7 +7,7 @@ An implementation of a wireless Klipper, Bambu and Octoprint status display on a
 A simple and cheap solution to use a dedicated screen with Klipper, a 3d printing Firmware.
 Also now with Bambu Lab and Octoprint printers!
 
-![showcase_image](readme/PXL_20231113_171629383.jpg)
+![showcase_image](readme/PXL_20250910_193024128.jpg)
 
 ### Required hardware
 
@@ -30,7 +30,7 @@ A ESP32-2432S028R is required to run this project. You can find out where to buy
 
 ### Install
 
-[There is a web-based installer available. This is only supported on Chrome, Edge, Arc or Opera, and only on Desktop.](https://suchmememanyskill.github.io/CYD-Klipper/)
+[Download release file](https://github.com/MaizeShark/CYD-Klipper/releases/tag/v1.0.0) and flash it via ``esptool write-flash 0x10000 firmware.bin`` or at [esptool.spacehuhn.com](https://esptool.spacehuhn.com/).
 
 On initial install, all data should be wiped. On updates, data should be able to be kept without issues.
 
