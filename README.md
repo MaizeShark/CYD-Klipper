@@ -30,7 +30,12 @@ A ESP32-2432S028R is required to run this project. You can find out where to buy
 
 ### Install
 
-[Download release file](https://github.com/MaizeShark/CYD-Klipper/releases/tag/v1.0.0) and flash it via ``esptool write-flash 0x10000 firmware.bin`` or at [esptool.spacehuhn.com](https://esptool.spacehuhn.com/).
+Clone the repo (``git clone https://github.com/MaizeShark/CYD-Klipper``) (or download it from ``https://github.com/MaizeShark/CYD-Klipper``) then you install and open vs code, install pio extension (https://platformio.org/install/ide?install=vscode) then you can open the folder CYD-Klipper inside of the cloned / downloaded folder, then you'll have to select esp32-2432S028R-V and press upload.
+<img width="1321" height="743" alt="image" src="https://github.com/user-attachments/assets/55721ae4-aad9-4a86-8ef4-e3a4e68779e1" />
+<img width="1321" height="743" alt="image" src="https://github.com/user-attachments/assets/0922b78f-9146-4c30-8523-3982a22ef992" />
+<img width="1321" height="743" alt="image" src="https://github.com/user-attachments/assets/8dddc570-fb04-4bda-b761-1453726b7e00" />
+
+
 
 On initial install, all data should be wiped. On updates, data should be able to be kept without issues.
 
