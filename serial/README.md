@@ -7,7 +7,7 @@ This section elaborates on how the host side (linux) should be set up to handle 
 1. Log into your host running klipper 
 1. Cd into a folder where CYD-Klipper will live, for example your home folder
     - To enter your home folder, type `cd ~`
-1. `git clone https://github.com/suchmememanyskill/CYD-Klipper`
+1. `git clone https://github.com/MaizeShark/CYD-Klipper`
 1. `cd CYD-Klipper/serial`
 1. `chmod a+x install.sh`
 1. `./install.sh`
