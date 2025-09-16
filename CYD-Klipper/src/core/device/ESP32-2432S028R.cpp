@@ -101,7 +101,7 @@ void screen_setup()
         // Portrait orientation
         disp_drv.hor_res = CYD_SCREEN_WIDTH_PX;  // 240
         disp_drv.ver_res = CYD_SCREEN_HEIGHT_PX; // 320
-        uint8_t rotation = global_config.rotate_screen ? 2 : 0;
+        uint8_t rotation = global_config.rotate_screen ? 0 : 2;
         tft.setRotation(rotation);
         touchscreen.setRotation(rotation);
     #else
